@@ -1,7 +1,7 @@
 {
   "name": "nb-lodash",
   "version": "0.0.1",
-  "description": "AngularJS wrapper for Modernizr",
+  "description": "AngularJS wrapper for Lo-Dash",
   "author": {
     "name": "Hein Bekker",
     "email": "hein@netbek.co.za",

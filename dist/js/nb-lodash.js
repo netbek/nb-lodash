@@ -16,6 +16,72 @@
 				delete $window._;
 
 				/**
+				 * Get the value of a key in an array or object.
+				 *
+				 * @param {object|array} obj
+				 * @param {string} path Path to value, e.g. to get 'c' value of obj, use path 'a.b.c'
+				 * @param {mixed} defaultValue
+				 * @param {string} delimiter Path delimiter (default: .)
+				 * @returns {mixed}
+				 */
+				_.get = function (obj, path, defaultValue, delimiter) {
+					if (angular.isUndefined(delimiter)) {
+						delimiter = '.';
+					}
+
+					var keys = path.split(delimiter);
+					var key = keys.shift();
+
+					if (!Object.prototype.hasOwnProperty.call(obj, key)) {
+						return defaultValue;
+					}
+
+					if (keys.length > 0) {
+						return _.get(obj[key], keys.join(delimiter));
+					}
+
+					return obj[key];
+				};
+
+				/**
+				 * Set the value of a key in an array or object. Note that the array or object is modified.
+				 *
+				 * @param {object|array} obj
+				 * @param {string} path Path to value, e.g. to set 'c' value of obj, use path 'a.b.c'
+				 * @param {mixed} value
+				 * @param {string} delimiter Path delimiter (default: .)
+				 * @returns {object|array}
+				 */
+				_.set = function (obj, path, value, delimiter) {
+					if (angular.isUndefined(delimiter)) {
+						delimiter = '.';
+					}
+
+					var keys = path.split(delimiter);
+					var len = keys.length - 1;
+					var parent = obj;
+
+					for (var i = 0; i < len; i++) {
+						var key = keys[i];
+
+						if (angular.isUndefined(parent[key]) || !angular.isObject(parent[key])) {
+							if (isNaN(keys[i + 1])) {
+								parent[key] = {};
+							}
+							else {
+								parent[key] = [];
+							}
+						}
+
+						parent = parent[key];
+					}
+
+					parent[keys[len]] = value;
+
+					return obj;
+				};
+
+				/**
 				 * Assigns own enumerable properties of source object(s) to the
 				 * destination object for all destination properties that
 				 * resolve to undefined. Once a property is set, additional

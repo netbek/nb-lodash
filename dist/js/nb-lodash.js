@@ -138,8 +138,6 @@
 						return out;
 					}
 
-					var ratioWidth, ratioHeight;
-
 					var ratioWidth = outWidth ? inWidth / outWidth : 0;
 					var ratioHeight = outHeight ? inHeight / outHeight : 0;
 

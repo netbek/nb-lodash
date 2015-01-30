@@ -117,6 +117,51 @@
 					return true;
 				};
 
+				/**
+				 * Scales width and height while maintaining aspect ratio.
+				 *
+				 * @param {int} inWidth
+				 * @param {int} inHeight
+				 * @param {int} outWidth
+				 * @param {int} outHeight
+				 * @returns {object}
+				 */
+				_.scale = function (inWidth, inHeight, outWidth, outHeight) {
+					var out = {
+						x: 0,
+						y: 0,
+						width: 0,
+						height: 0
+					};
+
+					if (!inWidth || !inHeight) {
+						return out;
+					}
+
+					var ratioWidth, ratioHeight;
+
+					var ratioWidth = outWidth ? inWidth / outWidth : 0;
+					var ratioHeight = outHeight ? inHeight / outHeight : 0;
+
+					if (ratioWidth < ratioHeight) {
+						out.width = Math.floor(inWidth / ratioHeight);
+						out.height = outHeight;
+					}
+					else {
+						out.width = outWidth;
+						out.height = Math.floor(inHeight / ratioWidth);
+					}
+
+					if (out.width < outWidth) {
+						out.x = Number(Math.max(0, Math.floor((outWidth - out.width) / 2)));
+					}
+					if (out.height < outHeight) {
+						out.y = Number(Math.max(0, Math.floor((outHeight - out.height) / 2)));
+					}
+
+					return out;
+				};
+
 				return _;
 			}])
 		.run(runBlock);

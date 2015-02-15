@@ -11,9 +11,8 @@
 
 	angular
 		.module('nb.lodash', [])
-		.factory('_', ['$window', function _ ($window) {
+		.factory('_', ['$window', function ($window) {
 				var _ = $window._;
-				delete $window._;
 
 				/**
 				 * Get the value of a key in an array or object.
@@ -161,11 +160,5 @@
 				};
 
 				return _;
-			}])
-		.run(runBlock);
-
-	// Invoke at runtime to allow factory to delete global reference.
-	runBlock.$inject = ['_'];
-	function runBlock (_) {
-	}
+			}]);
 })(window, window.angular);
